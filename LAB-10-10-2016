@@ -1,0 +1,88 @@
+Main Function
+
+
+//File: "LAB 10 10 2016.cpp"
+//Programmer: Kenny Blum
+//Date: 10/10/2016
+//Purpose: Minimum in an Array
+
+#include "findMinInRange.h"
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+//Function Prototype of findMinInRange
+int findMinInRange(int myArray[], int size, int high, int low);
+
+int main()
+{
+	//Declare the array
+	const int arraySize = 15;
+	int myArray[arraySize];
+	
+	//Populate the array with random numbers
+	srand(static_cast<int>(time(0)));
+	for (int i = 0; i < arraySize; i++)
+	{
+		myArray[i] = 15 + rand() % (55 - 15 + 1);
+	}
+	
+	//Display the array
+	cout << "My Array: ";
+	for (int i = 0; i < arraySize; i++)
+	{
+		cout << myArray[i];
+		if (i < arraySize - 1)
+		{
+			cout << ", ";
+		}
+	}
+	
+	//Find the minimum between two indexes using the function findMinInRange
+	int high = 0, low = 0;
+	cout << endl << "Enter a low and a high index: ";
+	cin >> high >> low;
+	int minimum = findMinInRange(myArray, arraySize, high, low);
+	
+	//Display the minimum between two indexes
+	if (minimum == -1)
+	{
+		cout << "Invalid Range";
+	}
+	else
+	{
+cout << "The minimum between indexes " << low << " and " << high << " is: " << minimum;
+	}
+	return 0;
+}
+
+
+Header File "findMinInRange.h"
+
+
+int findMinInRange(int myArray[], int size, int high, int low)
+{
+	int minimum = 55;
+	if (high < low)
+	{
+		int temp = 0;
+		temp = high;
+		high = low;
+		low = temp;
+	}
+	if (high >= size || low >= size || low < 0)
+	{
+		return -1;
+	}
+	else
+	{
+		for (int i = low; i <= high; i++)
+		{
+			if (myArray[i] < minimum)
+			{
+				minimum = myArray[i];
+			}
+		}
+	}
+	return minimum;
+}
