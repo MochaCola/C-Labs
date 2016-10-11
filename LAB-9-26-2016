@@ -1,0 +1,12 @@
+Exercise 3
+int main()
+{
+	string input = "Input";
+	
+	cout << "Type in: Drama Speaker\t\t";
+	getline(cin, input);
+	cout << "Hey, some letters spell:\t";
+	cout << input[3] << input[2] << input[1] << input[10] << input[8] << input[1];
+
+	return 0;
+}
