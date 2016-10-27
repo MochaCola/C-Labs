@@ -1,0 +1,66 @@
+===========
+Header File
+===========
+class Rectangle
+{
+public:
+	//Constructors
+	Rectangle();
+	Rectangle(double p_width, double p_height);
+
+	//Setters
+	void setWidth(double p_width);
+	void setHeight(double p_height);
+	
+	//Getters
+	double getArea();
+	double getPerimeter();
+	double getWidth();
+	double getHeight();
+private:
+	double m_width;
+	double m_height;
+};
+
+==============
+Implementation
+==============
+//Constructors
+Rectangle::Rectangle()
+{
+	m_width = 1;
+	m_height = 1;
+}
+Rectangle::Rectangle(double p_width, double p_height)
+{
+	m_width = p_width;
+	m_height = p_height;
+}
+
+//Setters
+void Rectangle::setWidth(double p_width)
+{
+	m_width = p_width;
+}
+void Rectangle::setHeight(double p_height)
+{
+	m_height = p_height;
+}
+
+//Getters
+double Rectangle::getArea()
+{
+	return m_width * m_height;
+}
+double Rectangle::getPerimeter()
+{
+	return 2 * m_width + 2 * m_height;
+}
+double Rectangle::getWidth()
+{
+	return m_width;
+}
+double Rectangle::getHeight()
+{
+	return m_height;
+}
