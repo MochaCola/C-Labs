@@ -1,31 +1,87 @@
+//Main
+
 #include <iostream>
-#include <ctime>
-#include <iomanip>
+#include "Functions.h"
 using namespace std;
 
 int main()
 {
-	int array[10][10] = { 0 };
+	const int C = 10;
+	const int R = 10;
+	int array[R][C] = { 0 };
 	for (int i = 0; i < 10; i++) //i is row number
 	{
 		array[i][0] = i + 1;
 	}
+	populate2DArray(array, R, C);
+	display2DArray(array, R, C);
+	removeNeighbors(array, R, C);
+	display2DArray(array, R, C);
+	returnNeighbors(array, R, C);
+	return 0;
+}
+
+
+
+//Functions.h
+
+#include <iostream>
+#include <iomanip>
+#include <ctime>
+using namespace std;
+
+void populate2DArray(int array[][10], const int R, const int C)
+{
+	cout << "Creating Random Number Connections to Routers 1-10..." << endl;
 	srand(time(0));
-	for (int i = 0; i < 10; i++) //i is row number
+	for (int i = 0; i < R; i++) //i is row number
 	{
-		for (int j = 1; j < 10; j++) //j is column number
+		for (int j = 1; j < C; j++) //j is column number
 		{
 			array[i][j] = 1 + rand() % (25 - 1 + 1);
 		}
 	}
-	cout << "Creating Random Number Connections to Routers 1-10..." << endl;
-	for (int i = 0; i < 10; i++) //i is row number
+}
+
+void display2DArray(int array[][10], const int R, const int C)
+{
+	for (int i = 0; i < R; i++) //i is row number
 	{
-		for (int j = 0; j < 10; j++) //j is column number
+		for (int j = 0; j < C; j++) //j is column number
 		{
 			cout << right << setw(3) << array[i][j];
 		}
 		cout << endl;
 	}
-	return 0;
+}
+
+void removeNeighbors(int array[][10], const int R, const int C)
+{
+	cout << "\n\nRemoving Neighbors if they are 1-10..." << endl;
+	for (int i = 0; i < R; i++) //i is row number
+	{
+		for (int j = 1; j < C; j++) //j is column number
+		{
+			if (array[i][j] <= 10)
+			{
+				array[i][j] = 0;
+			}
+		}
+	}
+}
+
+void returnNeighbors(int array[][10], const int R, const int C)
+{
+	cout << "\n\nRouter Neighbor Report...";
+	for (int i = 0; i < R; i++) //i is row number
+	{
+		cout << endl << setw(3) << i + 1 << " is a neighbor to:";
+		for (int j = 1; j < C; j++) //j is column number
+		{
+			if (array[i][j] != 0)
+			{
+				cout << setw(4) << array[i][j];
+			}
+		}
+	}
 }
