@@ -1,87 +1,84 @@
-//Main
+//File: "LAB.11.2.2016.cpp"
+//Programmer: Kenny Blum
+//Date: 11/2/2016
+//Purpose: 
 
 #include <iostream>
-#include "Functions.h"
+#include <string>
+#include <fstream>
+#include <iomanip>
 using namespace std;
+
+struct WordCount
+{
+	string word;
+	int count;
+};
 
 int main()
 {
-	const int C = 10;
-	const int R = 10;
-	int array[R][C] = { 0 };
-	for (int i = 0; i < 10; i++) //i is row number
+	const int SIZE = 268;
+	WordCount arr[SIZE];
+	WordCount item;
+
+	ifstream input;
+	input.open("C:\\Users\\Student\\Desktop\\LAB.11.2.2016\\text.txt");
+
+	arr[SIZE].count = 0;
+	for (int i = 0; i < SIZE; i++)
 	{
-		array[i][0] = i + 1;
+		input >> item.word;
+		item.count = 1;
+		arr[i] = item;
 	}
-	populate2DArray(array, R, C);
-	display2DArray(array, R, C);
-	removeNeighbors(array, R, C);
-	display2DArray(array, R, C);
-	returnNeighbors(array, R, C);
-	return 0;
-}
 
-
-
-//Functions.h
-
-#include <iostream>
-#include <iomanip>
-#include <ctime>
-using namespace std;
-
-void populate2DArray(int array[][10], const int R, const int C)
-{
-	cout << "Creating Random Number Connections to Routers 1-10..." << endl;
-	srand(time(0));
-	for (int i = 0; i < R; i++) //i is row number
+	//Bubble Sorting the Array
+	for (int i = 1; i < SIZE; i++)
 	{
-		for (int j = 1; j < C; j++) //j is column number
+		for (int j = SIZE - 1; j >= i; j--)
 		{
-			array[i][j] = 1 + rand() % (25 - 1 + 1);
+			if (arr[j].word < arr[j-1].word)
+			{
+				swap(arr[j].word, arr[j - 1].word);
+			}
 		}
 	}
-}
 
-void display2DArray(int array[][10], const int R, const int C)
-{
-	for (int i = 0; i < R; i++) //i is row number
+	//Accumulating Like Words
+	for (int i = SIZE - 1; i >= 0; i--)
 	{
-		for (int j = 0; j < C; j++) //j is column number
+		for (int j = 1; (i - j) > 0; j++)
 		{
-			cout << right << setw(3) << array[i][j];
+			if (arr[i].word == arr[i - j].word)
+			{
+				if (arr[i].word != "")
+				{
+					arr[i].count++;
+				}
+				arr[i - j].word = "";
+				arr[i - j].count = 0;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	
+	//Displaying the Sorted Array
+	cout << "Array Content..." << endl;
+	for (int i = 0; i < SIZE; i++)
+	{
+		cout << left << setw(10) << arr[i].word;
+		if (arr[i].count != 0)
+		{
+			cout << "\tCount = " << arr[i].count;
 		}
 		cout << endl;
 	}
-}
+	cout << "Word Count: " << arr[SIZE].count << endl;
 
-void removeNeighbors(int array[][10], const int R, const int C)
-{
-	cout << "\n\nRemoving Neighbors if they are 1-10..." << endl;
-	for (int i = 0; i < R; i++) //i is row number
-	{
-		for (int j = 1; j < C; j++) //j is column number
-		{
-			if (array[i][j] <= 10)
-			{
-				array[i][j] = 0;
-			}
-		}
-	}
-}
+	input.close();
 
-void returnNeighbors(int array[][10], const int R, const int C)
-{
-	cout << "\n\nRouter Neighbor Report...";
-	for (int i = 0; i < R; i++) //i is row number
-	{
-		cout << endl << setw(3) << i + 1 << " is a neighbor to:";
-		for (int j = 1; j < C; j++) //j is column number
-		{
-			if (array[i][j] != 0)
-			{
-				cout << setw(4) << array[i][j];
-			}
-		}
-	}
+	return 0;
 }
