@@ -1,7 +1,7 @@
-//File: "LAB.11.2.2016.cpp"
+//File: "Homework7.cpp"
 //Programmer: Kenny Blum
-//Date: 11/2/2016
-//Purpose: 
+//Date: 11/8/2016
+//Purpose: Homework 7
 
 #include <iostream>
 #include <string>
@@ -17,29 +17,33 @@ struct WordCount
 
 int main()
 {
-	const int SIZE = 268;
+	const int SIZE = 500;	//Maximum of 500 words
 	WordCount arr[SIZE];
 	WordCount item;
 
+	//Inputting Words
 	ifstream input;
-	input.open("C:\\Users\\Student\\Desktop\\LAB.11.2.2016\\text.txt");
-
+	input.open("C:\\Users\\KennyGaming\\Documents\\Visual Studio 2015\\Projects\\Homework7\\GDP.txt");
 	arr[SIZE].count = 0;
-	for (int i = 0; i < SIZE; i++)
+	int index = 0;
+	while (!input.eof())
 	{
 		input >> item.word;
 		item.count = 1;
-		arr[i] = item;
+		arr[index] = item;
+		arr[SIZE].count++;
+		index++;
 	}
+	input.close();
 
 	//Bubble Sorting the Array
 	for (int i = 1; i < SIZE; i++)
 	{
 		for (int j = SIZE - 1; j >= i; j--)
 		{
-			if (arr[j].word < arr[j-1].word)
+			if (arr[j].word < arr[j - 1].word)
 			{
-				swap(arr[j].word, arr[j - 1].word);
+				swap(arr[j], arr[j - 1]);
 			}
 		}
 	}
@@ -64,21 +68,16 @@ int main()
 			}
 		}
 	}
-	
-	//Displaying the Sorted Array
+
+	//Displaying the Array
 	cout << "Array Content..." << endl;
 	for (int i = 0; i < SIZE; i++)
 	{
-		cout << left << setw(10) << arr[i].word;
-		if (arr[i].count != 0)
+		if (arr[i].count != 0 && arr[i].word != "")
 		{
-			cout << "\tCount = " << arr[i].count;
+			cout << left << setw(10) << arr[i].word << "\tCount = " << arr[i].count << endl;
 		}
-		cout << endl;
 	}
 	cout << "Word Count: " << arr[SIZE].count << endl;
-
-	input.close();
-
 	return 0;
 }
