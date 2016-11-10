@@ -1,0 +1,109 @@
+//File: "Homework8.cpp"
+//Programmer: Kenny Blum
+//Date: 11/8/2016
+//Purpose: Homework 8
+
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <iomanip>
+using namespace std;
+
+struct WordCount
+{
+	string word;
+	int count;
+};
+
+int main()
+{
+	const int SIZE = 500;	//Maximum of 500 words
+	WordCount arr[SIZE];
+	WordCount item;
+
+	ifstream input;
+	input.open("txt.txt");
+	arr[SIZE].count = 0;
+	int index = 0;
+	while (!input.eof())
+	{
+		input >> item.word;
+		string word = item.word;
+		for (int i = 0; i < word.size; i++)
+		{
+			if (isupper(word.at(i)))
+			{
+				tolower(word.at(i));			//Converting uppercase letters to lowercase
+			}
+			if (isdigit(word.at(i)))
+			{
+				(item.word).erase;				//Removing words that contain numbers
+			}
+		}
+		if (word.find("'s") != -1)
+		{
+			(item.word).erase;					//Removing words that contain 's
+		}
+		else if (word.find("u.s.") != -1)
+		{
+			(item.word).erase;					//Removing words that contain u.s.
+		}
+		else if (word.size == 1)
+		{
+			(item.word).erase;					//Removing single-character words
+		}
+		else
+		{
+			item.count = 1;						  //Inputting desirable words
+			arr[index] = item;
+			arr[SIZE].count++;
+			index++;
+		}
+	}
+	input.close();
+
+	//Bubble Sorting the Array
+	for (int i = 1; i < SIZE; i++)
+	{
+		for (int j = SIZE - 1; j >= i; j--)
+		{
+			if (arr[j].word < arr[j - 1].word)
+			{
+				swap(arr[j], arr[j - 1]);
+			}
+		}
+	}
+
+	//Accumulating Like Words
+	for (int i = SIZE - 1; i >= 0; i--)
+	{
+		for (int j = 1; (i - j) > 0; j++)
+		{
+			if (arr[i].word == arr[i - j].word)
+			{
+				if (arr[i].word != "")
+				{
+					arr[i].count++;
+				}
+				arr[i - j].word = "";
+				arr[i - j].count = 0;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+
+	//Displaying the Array
+	cout << "Array Content..." << endl;
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (arr[i].count != 0 && arr[i].word != "")
+		{
+			cout << left << setw(10) << arr[i].word << "\tCount = " << arr[i].count << endl;
+		}
+	}
+	cout << "Word Count: " << arr[SIZE].count;
+	return 0;
+}
