@@ -1,0 +1,99 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+struct Node
+{
+	int data;
+	Node* link;
+};
+
+void insertNode(Node* temp, Node* hPtr)
+{
+	Node* movingPtr = NULL;
+	bool complete = false;
+	movingPtr = hPtr;
+	while (complete == false)
+	{
+		if ((*temp).data > (*movingPtr).data && (*temp).data < (*(*movingPtr).link).data)
+		{
+			(*temp).link = (*movingPtr).link;
+			(*movingPtr).link = temp;
+			complete = true;
+		}
+		else
+		{
+			movingPtr = (*movingPtr).link;
+		}
+	}
+}
+
+int main()
+{
+	Node* hPtr = NULL;
+	Node* tPtr = NULL;
+	Node* temp = NULL;
+	Node* temp2 = NULL;
+	
+	//Head Node
+	hPtr = new Node;
+	(*hPtr).data = 0;
+	(*hPtr).link = NULL;
+
+	//First Node
+	temp = new Node;
+	(*hPtr).link = temp;
+	(*temp).data = 10;
+	(*temp).link = NULL;
+
+	//Second Node
+	temp2 = new Node;
+	(*temp).link = temp2;
+	(*temp2).data = 20;
+	(*temp2).link = NULL;
+
+	//Third Node
+	temp = new Node;
+	(*temp2).link = temp;
+	(*temp).data = 30;
+	(*temp).link = NULL;
+
+	//Fourth Node
+	temp2 = new Node;
+	(*temp).link = temp2;
+	(*temp2).data = 40;
+	(*temp2).link = NULL;
+
+	//Tail Node
+	tPtr = new Node;
+	(*temp2).link = tPtr;
+	(*tPtr).data = 100;
+	(*tPtr).link = NULL;
+
+	//Insert Node with Data 1
+	temp = new Node;
+	(*temp).data = 1;
+	(*temp).link = NULL;
+	insertNode(temp, hPtr);
+
+	//Insert Node with Data 25
+	temp = new Node;
+	(*temp).data = 25;
+	(*temp).link = NULL;
+	insertNode(temp, hPtr);
+
+	//Insert Node with Data 99
+	temp = new Node;
+	(*temp).data = 99;
+	(*temp).link = NULL;
+	insertNode(temp, hPtr);
+	
+	//Output Data of Nodes
+	temp = hPtr;
+	while (temp != NULL)
+	{
+		cout << (*temp).data << endl;
+		temp = (*temp).link;
+	}
+	return 0;
+}
