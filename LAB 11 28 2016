@@ -1,0 +1,89 @@
+//Inheritance
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person
+{
+public:
+	Person();
+	Person(string p_name);
+	void showIdentity();
+protected:
+	string m_name;
+};
+
+Person::Person()
+{
+	m_name = "";
+}
+Person::Person(string p_name)
+{
+	m_name = p_name;
+}
+void Person::showIdentity()
+{
+	cout << "Name:\t" << m_name << endl;
+}
+
+class President : public Person
+{
+public:
+	President();
+	President(string p_name);
+	President(string p_name, string p_country);
+	President(string p_name, string p_country, string p_party);
+	President(string p_name, string p_country, string p_party, int p_years);
+	void showIdentity();
+private:
+	string m_country;
+	string m_party;
+	int m_years;
+};
+
+President::President()
+	:Person()
+{
+	m_country = "";
+	m_party = "";
+	m_years = 0;
+}
+President::President(string p_name)
+	:Person(p_name)
+{
+	m_country = "";
+	m_party = "";
+	m_years = 0;
+}
+President::President(string p_name, string p_country)
+	:Person(p_name)
+{
+	m_country = p_country;
+	m_party = "";
+	m_years = 0;
+}
+President::President(string p_name, string p_country, string p_party)
+	:Person(p_name)
+{
+	m_country = p_country;
+	m_party = p_party;
+	m_years = 0;
+}
+President::President(string p_name, string p_country, string p_party, int p_years)
+	:Person(p_name)
+{
+	m_country = p_country;
+	m_party = p_party;
+	m_years = p_years;
+}
+void President::showIdentity()
+{
+	cout << "\nName:\t" << m_name;
+	cout << "\nCountry:\t" << m_country;
+	cout << "\nParty:\t" << m_party;
+	if (m_years == 0)
+		cout << "\nYears in office:\tUnknown or less than a year";
+	else
+		cout << "\nYears in office:\t" << m_years;
+}
