@@ -1,0 +1,105 @@
+-----------
+Main Driver
+-----------
+#include <iostream>
+#include <ctime>
+#include "Classes.h"
+using namespace std;
+
+int main()
+{
+	srand(time(0));
+	Shape* ptr[5];
+	double data1, data2, data3 = 0.0;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		data1 = rand() + 1 % (2 - 1 + 1);
+		if (data1 == 1)
+		{
+			data2 = rand() + 1 % (10 - 1 + 1);
+			ptr[i] = new Circle(data2);
+			cout << "Area of Circle " << i << " : " << ptr[i]->getArea;
+		}
+		else
+		{
+			data2 = rand() + 1 % (10 - 1 + 1);
+			data3 = rand() + 1 % (10 - 1 + 1);
+			ptr[i] = new Rectangle(data2, data3);
+			cout << "Area of Rectangle " << i << " : " << ptr[i]->getArea;
+		}
+	}
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+class Shape
+{
+public:
+	double virtual getArea() = 0;
+protected:
+	double m_area;
+};
+
+---------
+Classes.h
+---------
+class Circle : public Shape
+{
+public:
+	Circle();
+	Circle(double p_radius);
+	double getArea();
+private:
+	double m_radius;
+	double m_area;
+};
+
+class Rectangle : public Shape
+{
+public:
+	Rectangle();
+	Rectangle(double p_height, double p_width);
+	double getArea();
+private:
+	double m_height;
+	double m_width;
+	double m_area;
+};
+
+--------------
+Implementation
+--------------
+#include <iostream>
+#include "Classes.h"
+using namespace std;
+
+Circle::Circle()
+{
+	m_radius = 1.0;
+}
+Circle::Circle(double p_radius)
+{
+	m_radius = p_radius;
+}
+double Circle::getArea()
+{
+	return (m_radius * m_radius * 3.14159);
+}
+
+Rectangle::Rectangle()
+{
+	m_height = 1.0;
+	m_width = 1.0;
+}
+Rectangle::Rectangle(double p_height, double p_width)
+{
+	m_height = p_height;
+	m_width = p_width;
+}
+double Rectangle::getArea()
+{
+	return (m_height * m_width);
+}
