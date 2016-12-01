@@ -1,0 +1,216 @@
+---------
+Classes.h
+---------
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person
+{
+public:
+	Person();
+	Person(string p_name, string p_address, string p_number, string p_email);
+	void toString();
+protected:
+	string m_name;
+	string m_address;
+	string m_number;
+	string m_email;
+};
+
+class Student : public Person
+{
+public:
+	Student();
+	Student(string p_name, string p_address, string p_number, string p_email, string p_class);
+	void toString();
+private:
+	string m_class;
+};
+
+class MyDate
+{
+public:
+	MyDate();
+	MyDate(int p_year, int p_month, int p_day);
+	void toString();
+private:
+	int m_year;
+	int m_month;
+	int m_day;
+};
+
+class Employee : public Person
+{
+public:
+	Employee();
+	Employee(string p_name, string p_address, string p_number, string p_email, string p_office, int p_salary, MyDate p_dateHired);
+	void toString();
+protected:
+	string m_office;
+	int m_salary;
+	MyDate m_dateHired;
+};
+
+class Faculty : public Employee
+{
+public:
+	Faculty();
+	Faculty(string p_name, string p_address, string p_number, string p_email, string p_office, int p_salary, MyDate p_dateHired, string p_officeHours, string p_rank);
+	void toString();
+private:
+	string m_officeHours;
+	string m_rank;
+};
+
+class Staff : public Employee
+{
+public:
+	Staff();
+	Staff(string p_name, string p_address, string p_number, string p_email, string p_office, int p_salary, MyDate p_dateHired, string p_title);
+	void toString();
+protected:
+	string m_title;
+};
+
+------------------
+Implementation.cpp
+------------------
+#include <iostream>
+#include <string>
+#include "Classes.h"
+using namespace std;
+
+Person::Person()
+{
+	m_name = "";
+	m_address = "";
+	m_number = "";
+	m_email = "";
+}
+Person::Person(string p_name, string p_address, string p_number, string p_email)
+{
+	m_name = p_name;
+	m_address = p_address;
+	m_number = p_number;
+	m_email = p_email;
+}
+void Person::toString()
+{
+	cout << "Name:\t\t" << m_name;
+	cout << "\nAddress:\t" << m_address;
+	cout << "\nNumber:\t\t" << m_number;
+	cout << "\nE-mail:\t\t" << m_email;
+}
+
+Student::Student()
+	:Person()
+{
+	m_class = "";
+}
+Student::Student(string p_name, string p_address, string p_number, string p_email, string p_class)
+	:Person(p_name, p_address, p_number, p_email)
+{
+	m_class = p_class;
+}
+void Student::toString()
+{
+	Person::toString();
+	cout << "\nClass:\t\t" << m_class;
+}
+
+MyDate::MyDate()
+{
+	m_year = 0;
+	m_month = 0;
+	m_day = 0;
+}
+MyDate::MyDate(int p_year, int p_month, int p_day)
+{
+	m_year = p_year;
+	m_month = p_month;
+	m_day = p_day;
+}
+void MyDate::toString()
+{
+	cout << m_year << "/" << m_month << "/" << m_day;
+}
+
+Employee::Employee()
+	:Person()
+{
+	m_office = "";
+	m_salary = 0;
+	m_dateHired = MyDate();
+}
+Employee::Employee(string p_name, string p_address, string p_number, string p_email, string p_office, int p_salary, MyDate p_dateHired)
+	:Person(p_name, p_address, p_number, p_email)
+{
+	m_office = p_office;
+	m_salary = p_salary;
+	m_dateHired = p_dateHired;
+}
+void Employee::toString()
+{
+	Person::toString();
+	cout << "\nOffice:\t\t" << m_office;
+	cout << "\nSalary:\t\t$" << m_salary << " per year";
+	cout << "\nDate Hired:\t";
+	m_dateHired.toString();
+}
+
+Faculty::Faculty()
+	:Employee()
+{
+	m_officeHours = "";
+	m_rank = "";
+}
+Faculty::Faculty(string p_name, string p_address, string p_number, string p_email, string p_office, int p_salary, MyDate p_dateHired, string p_officeHours, string p_rank)
+	:Employee(p_name, p_address, p_number, p_email, p_office, p_salary, p_dateHired)
+{
+	m_officeHours = p_officeHours;
+	m_rank = p_rank;
+}
+void Faculty::toString()
+{
+	Employee::toString();
+	cout << "\nOffice Hours:\t" << m_officeHours;
+	cout << "\nRank:\t\t" << m_rank;
+}
+
+Staff::Staff()
+	:Employee()
+{
+	m_title = "";
+}
+Staff::Staff(string p_name, string p_address, string p_number, string p_email, string p_office, int p_salary, MyDate p_dateHired, string p_title)
+	:Employee(p_name, p_address, p_number, p_email, p_office, p_salary, p_dateHired)
+{
+	m_title = p_title;
+}
+void Staff::toString()
+{
+	Employee::toString();
+	cout << "\nTitle:\t\t" << m_title;
+}
+-----------
+Main Driver
+-----------
+#include <iostream>
+#include <string>
+#include "Classes.h"
+using namespace std;
+
+int main()
+{
+	Person* ptr[4];
+	ptr[0] = new Student("Jeremy James", "103 McLeon Road", "415-827-4682", "jeremy_james@gmail.com", "Sophomore");
+	ptr[1] = new Employee("Sasha Silver", "423 Alfred Street", "707-455-7329", "sashasilver@comcast.net", "Uncreative Office Name", 120000, MyDate(12, 17, 1999));
+	ptr[2] = new Faculty("Trevor Thomas", "145 Sanchez Way", "613-784-4430", "trevort@aol.com", "The Post Office", 105000, MyDate(7, 18, 1993), "9:00 AM - 5:00 PM", "Director");
+	ptr[3] = new Staff("Greg Grant", "500 Vine Road", "842-936-2875", "greggrant@gmail.com", "Microsoft Office", 250000, MyDate(10, 28, 1975), "Overseer");
+	for (int i = 0; i < 4; i++)
+	{
+		ptr[i]->toString();
+	}
+	return 0;
+}
