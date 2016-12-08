@@ -1,0 +1,82 @@
+-----------
+Rectangle.h
+-----------
+#include <iostream>
+using namespace std;
+
+template <class T>
+class Rectangle
+{
+public:
+	typedef T value_type;
+	Rectangle();
+	Rectangle(T p_height, T p_width);
+	void setHeight(T p_height);
+	void setWidth(T p_width);
+	T getHeight();
+	T getWidth();
+	T getArea();
+private:
+	T m_height;
+	T m_width;
+};
+
+template <class T>
+Rectangle<T>::Rectangle()
+{
+	m_height = value_type();
+	m_width = value_type();
+}
+
+template <class T>
+Rectangle<T>::Rectangle(T p_height, T p_width)
+{
+	m_height = p_height;
+	m_width = p_width;
+}
+
+template <class T>
+void Rectangle<T>::setHeight(T p_height)
+{
+	m_height = p_height;
+}
+
+template <class T>
+void Rectangle<T>::setWidth(T p_width)
+{
+	m_width = p_width;
+}
+
+template <class T>
+T Rectangle<T>::getHeight()
+{
+	return m_height;
+}
+
+template <class T>
+T Rectangle<T>::getWidth()
+{
+	return m_width;
+}
+
+template <class T>
+T Rectangle<T>::getArea()
+{
+	return (m_width * m_height);
+}
+
+-----------
+Main Driver
+-----------
+#include <iostream>
+#include "Rectangle.h"
+using namespace std;
+
+int main()
+{
+	Rectangle<int> rect1;
+	Rectangle<double> rect2(10.5, 5.5);
+	cout << "Area: " << rect1.getArea() << endl;
+	cout << "Area: " << rect2.getArea() << endl;
+	return 0;
+}
